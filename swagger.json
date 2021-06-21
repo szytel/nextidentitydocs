@@ -1,0 +1,1438 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Next Reason IDP API",
+        "description": "Manage all the Next Reason IDP API endpoints",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/v1/idp/account/{org_id}/register": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Register",
+                "description": "Creates a new profile for the user.\nVerification link will be sent via email, or code via SMS,\nupon successful registration (based on authentication type).",
+                "operationId": "register_v1_idp_account__org_id__register_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_register_v1_idp_account__org_id__register_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthCodeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/login": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Login",
+                "description": "Grants access for the user. Can login via email, or primary\nmobile number, based on authentication type.",
+                "operationId": "login_v1_idp_account__org_id__login_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_login_v1_idp_account__org_id__login_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthCodeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/token": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Token",
+                "description": "Generates JWT tokens, for use in other endpoints, and process.\nDepending on the grant type, this accepts either authorization code,\nrefresh token, or pin (for SMS).",
+                "operationId": "token_v1_idp_account__org_id__token_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_token_v1_idp_account__org_id__token_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/forgot-password": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Forgot Password",
+                "description": "Used for password reset request, if user forgot their password.\nA reset link is sent via email, or code via SMS\n(based on authentication type).",
+                "operationId": "forgot_password_v1_idp_account__org_id__forgot_password_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_forgot_password_v1_idp_account__org_id__forgot_password_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/pre-register": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Preregister",
+                "description": "Sends an invite to a user (create a user without a password).\nVerification link will be sent via email, or code via SMS,\nupon successful registration (based on authentication type).",
+                "operationId": "preregister_v1_idp_account__org_id__pre_register_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_preregister_v1_idp_account__org_id__pre_register_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/profile": {
+            "get": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Profile",
+                "description": "Gets user's profile.\nUses access token to process information to return.",
+                "operationId": "profile_v1_idp_account__org_id__profile_get",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Client set up for relying party",
+                        "required": true,
+                        "schema": {
+                            "title": "Client set up for relying party",
+                            "type": "string",
+                            "description": "Client set up for relying party"
+                        },
+                        "name": "client_id",
+                        "in": "query"
+                    },
+                    {
+                        "description": "The authorization header",
+                        "required": true,
+                        "schema": {
+                            "title": "The authorization header",
+                            "type": "string",
+                            "description": "The authorization header"
+                        },
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Profile Update",
+                "description": "Updates user's profile.\nUses access token to process the update.",
+                "operationId": "profile_update_v1_idp_account__org_id__profile_put",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "The authorization header",
+                        "required": true,
+                        "schema": {
+                            "title": "The authorization header",
+                            "type": "string",
+                            "description": "The authorization header"
+                        },
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_profile_update_v1_idp_account__org_id__profile_put"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/resend-verification": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Resend Verification",
+                "description": "Resends verification link/code to the user, if previous verification\nexpired, or is now invalid.\nVerification link will be sent via email, or code via SMS\n(based on authentication type).",
+                "operationId": "resend_verification_v1_idp_account__org_id__resend_verification_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_resend_verification_v1_idp_account__org_id__resend_verification_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/change-password": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Change Password",
+                "description": "Changes the password of a user (for password change, or password reset actions).\nUses access token to process the change.",
+                "operationId": "change_password_v1_idp_account__org_id__change_password_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "The authorization header",
+                        "required": true,
+                        "schema": {
+                            "title": "The authorization header",
+                            "type": "string",
+                            "description": "The authorization header"
+                        },
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_change_password_v1_idp_account__org_id__change_password_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/users/find": {
+            "get": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "User Find",
+                "description": "Finds all users in an entity type according to\nspecified criteria.",
+                "operationId": "user_find_v1_idp_account__org_id__users_find_get",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Client set up for relying party",
+                        "required": true,
+                        "schema": {
+                            "title": "Client set up for relying party",
+                            "type": "string",
+                            "description": "Client set up for relying party"
+                        },
+                        "name": "client_id",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Attributes to be fetched",
+                        "required": false,
+                        "schema": {
+                            "title": "Attributes to be fetched",
+                            "type": "string",
+                            "description": "Attributes to be fetched"
+                        },
+                        "name": "attributes",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Query to filter attributes with corresponding values",
+                        "required": false,
+                        "schema": {
+                            "title": "Query to filter attributes with corresponding values",
+                            "type": "string",
+                            "description": "Query to filter attributes with corresponding values",
+                            "default": ""
+                        },
+                        "name": "query_filter",
+                        "in": "query"
+                    },
+                    {
+                        "description": "maximum number of results to return",
+                        "required": false,
+                        "schema": {
+                            "title": "maximum number of results to return",
+                            "type": "integer",
+                            "description": "maximum number of results to return",
+                            "default": 100
+                        },
+                        "name": "max_results",
+                        "in": "query"
+                    },
+                    {
+                        "description": "comma-separated list of attributes to sort on, prefix\n        with '-'(minus) to sort in reverse",
+                        "required": false,
+                        "schema": {
+                            "title": "comma-separated list of attributes to sort on",
+                            "type": "string",
+                            "description": "comma-separated list of attributes to sort on, prefix\n        with '-'(minus) to sort in reverse",
+                            "default": "[]"
+                        },
+                        "name": "sort_on",
+                        "in": "query"
+                    },
+                    {
+                        "description": "timeout in seconds (max: 120)",
+                        "required": false,
+                        "schema": {
+                            "title": "timeout in seconds",
+                            "type": "integer",
+                            "description": "timeout in seconds (max: 120)",
+                            "default": 60
+                        },
+                        "name": "timeout",
+                        "in": "query"
+                    },
+                    {
+                        "description": "display total result count in response",
+                        "required": false,
+                        "schema": {
+                            "title": "display total result count in response",
+                            "type": "boolean",
+                            "description": "display total result count in response",
+                            "default": true
+                        },
+                        "name": "show_total_count",
+                        "in": "query"
+                    },
+                    {
+                        "description": "The authorization header",
+                        "required": true,
+                        "schema": {
+                            "title": "The authorization header",
+                            "type": "string",
+                            "description": "The authorization header"
+                        },
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/users/update": {
+            "put": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "User Update",
+                "description": "Directly updates user information. Only modifies attributes\nspecified in the request.",
+                "operationId": "user_update_v1_idp_account__org_id__users_update_put",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "The authorization header",
+                        "required": true,
+                        "schema": {
+                            "title": "The authorization header",
+                            "type": "string",
+                            "description": "The authorization header"
+                        },
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_user_update_v1_idp_account__org_id__users_update_put"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idp/account/{org_id}/consent": {
+            "post": {
+                "tags": [
+                    "Password Grant"
+                ],
+                "summary": "Consent",
+                "description": "Updates the user's legal acceptance version, based on the latest version\nindicated in the client settings.",
+                "operationId": "consent_v1_idp_account__org_id__consent_post",
+                "parameters": [
+                    {
+                        "description": "organization identifier",
+                        "required": true,
+                        "schema": {
+                            "title": "org_id",
+                            "type": "string",
+                            "description": "organization identifier"
+                        },
+                        "name": "org_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_consent_v1_idp_account__org_id__consent_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthCodeResponse": {
+                "title": "AuthCodeResponse",
+                "required": [
+                    "authorization_code"
+                ],
+                "type": "object",
+                "properties": {
+                    "authorization_code": {
+                        "title": "Authorization Code",
+                        "type": "string",
+                        "description": "Authorization Code"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Message",
+                        "default": ""
+                    }
+                },
+                "description": "Authorization Code Response Model"
+            },
+            "Body_change_password_v1_idp_account__org_id__change_password_post": {
+                "required": [
+                    "client_id",
+                    "password",
+                    "password_confirm"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "current_password": {
+                        "title": "current_password",
+                        "type": "string",
+                        "description": "End-user password login"
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "description": "End-user password"
+                    },
+                    "password_confirm": {
+                        "title": "password_confirm",
+                        "type": "string",
+                        "description": "End-user password confirm"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    }
+                }
+            },
+            "Body_consent_v1_idp_account__org_id__consent_post": {
+                "required": [
+                    "client_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "code",
+                        "type": "string",
+                        "description": "The authorization code"
+                    },
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    }
+                }
+            },
+            "Body_forgot_password_v1_idp_account__org_id__forgot_password_post": {
+                "required": [
+                    "client_id",
+                    "user_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "string",
+                        "description": "End-user identificator"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    }
+                }
+            },
+            "Body_login_v1_idp_account__org_id__login_post": {
+                "required": [
+                    "client_id",
+                    "grant_type",
+                    "user_id",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "grant_type": {
+                        "title": "grant_type",
+                        "type": "string",
+                        "description": "Grant type based on oauth2.0 spec"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "scope": {
+                        "title": "scope",
+                        "type": "string",
+                        "description": "Set to \"code\" or leave blank to only authorization code"
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "string",
+                        "description": "End-user identificator"
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "description": "End-user password"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    }
+                }
+            },
+            "Body_preregister_v1_idp_account__org_id__pre_register_post": {
+                "required": [
+                    "client_id",
+                    "grant_type",
+                    "profile_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "grant_type": {
+                        "title": "grant_type",
+                        "type": "string",
+                        "description": "Grant type based on oauth2.0 spec"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "profile_fields": {
+                        "title": "profile_fields",
+                        "type": "object",
+                        "description": "JSON of fields that are configured on the registration form. These can either be required or optional - the optional fields can be omitted"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    },
+                    "site_identifier": {
+                        "title": "site_identifier",
+                        "type": "string",
+                        "description": "site identifier"
+                    }
+                }
+            },
+            "Body_profile_update_v1_idp_account__org_id__profile_put": {
+                "required": [
+                    "client_id",
+                    "profile_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "profile_fields": {
+                        "title": "profile_fields",
+                        "type": "object",
+                        "description": "JSON of fields that are configured on the registration form. These can either be required or optional - the optional fields can be omitted"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    }
+                }
+            },
+            "Body_register_v1_idp_account__org_id__register_post": {
+                "required": [
+                    "client_id",
+                    "grant_type",
+                    "profile_fields"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "grant_type": {
+                        "title": "grant_type",
+                        "type": "string",
+                        "description": "Grant type based on oauth2.0 spec"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "profile_fields": {
+                        "title": "profile_fields",
+                        "type": "object",
+                        "description": "JSON of fields that are configured on the registration form. These can either be required or optional - the optional fields can be omitted"
+                    },
+                    "site_identifier": {
+                        "title": "site_identifier",
+                        "type": "string",
+                        "description": "site identifier"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    }
+                }
+            },
+            "Body_resend_verification_v1_idp_account__org_id__resend_verification_post": {
+                "required": [
+                    "client_id",
+                    "user_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "string",
+                        "description": "End-user identificator"
+                    },
+                    "locale": {
+                        "title": "locale",
+                        "type": "string",
+                        "description": "Language that the transaction will be sent in. Examples: en-US, fr-FR"
+                    },
+                    "options": {
+                        "title": "options",
+                        "type": "object",
+                        "description": "Optional parameters",
+                        "default": {}
+                    }
+                }
+            },
+            "Body_token_v1_idp_account__org_id__token_post": {
+                "required": [
+                    "client_id",
+                    "grant_type",
+                    "user_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "grant_type": {
+                        "title": "grant_type",
+                        "type": "string",
+                        "description": "Grant type based on oauth2.0 spec"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    },
+                    "code": {
+                        "title": "code",
+                        "type": "string",
+                        "description": "The authorization code"
+                    },
+                    "refresh_token": {
+                        "title": "refresh_token",
+                        "type": "string",
+                        "description": "The refresh token"
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "string",
+                        "description": "End-user identificator"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    }
+                }
+            },
+            "Body_user_update_v1_idp_account__org_id__users_update_put": {
+                "required": [
+                    "client_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "client_id": {
+                        "title": "client_id",
+                        "type": "string",
+                        "description": "Client set up for relying party"
+                    },
+                    "uuid": {
+                        "title": "uuid",
+                        "type": "string",
+                        "description": "unique identifier for entity"
+                    },
+                    "key_property": {
+                        "title": "key_property",
+                        "type": "string",
+                        "description": "name of entity's unique property"
+                    },
+                    "key_value": {
+                        "title": "key_value",
+                        "type": "string",
+                        "description": "value for the key_property parameter"
+                    },
+                    "attribute_name": {
+                        "title": "attribute_name",
+                        "type": "string",
+                        "description": "attribute name to be updated"
+                    },
+                    "attributes": {
+                        "title": "attributes",
+                        "type": "object",
+                        "description": "attribute key value pairs to update"
+                    },
+                    "value": {
+                        "title": "value",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ],
+                        "description": "the value to update on the entity"
+                    },
+                    "auth_type": {
+                        "title": "auth_type",
+                        "type": "string"
+                    },
+                    "redirect_uri": {
+                        "title": "redirect_uri",
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorException": {
+                "title": "ErrorException",
+                "required": [
+                    "error",
+                    "error_description"
+                ],
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "title": "Error code",
+                        "type": "string",
+                        "description": "Short error code"
+                    },
+                    "error_description": {
+                        "title": "Error description",
+                        "type": "string",
+                        "description": "Short error description"
+                    },
+                    "error_details": {
+                        "title": "Detailed error message",
+                        "type": "object",
+                        "description": "Detailed error description",
+                        "default": {}
+                    }
+                },
+                "description": "Error response base model"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Password Grant",
+            "description": "Password Grant endpoints"
+        }
+    ]
+}
